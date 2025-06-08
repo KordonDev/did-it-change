@@ -69,6 +69,36 @@ func main() {
 }
 
 func setupRoutes(router *gin.Engine, service *MonitorService) {
+	// Add root endpoint with navigation links
+	router.GET("/", func(c *gin.Context) {
+		html := `
+		<html>
+		<head>
+			<title>Did It Change - Monitor Service</title>
+			<style>
+				body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
+				h1 { color: #333; }
+				ul { list-style-type: none; padding: 0; }
+				li { margin: 10px 0; }
+				a { color: #0366d6; text-decoration: none; }
+				a:hover { text-decoration: underline; }
+			</style>
+		</head>
+		<body>
+			<h1>Did It Change - Monitor Service</h1>
+			<h2>Available Endpoints:</h2>
+			<ul>
+				<li><a href="/api/monitors">/api/monitors</a> - List all monitors and their status</li>
+				<li><a href="/api/monitors/NAME">/api/monitors/:name</a> - Get status for a specific monitor</li>
+				<li><a href="/health">/health</a> - Health check endpoint</li>
+			</ul>
+		</body>
+		</html>
+		`
+		c.Header("Content-Type", "text/html")
+		c.String(http.StatusOK, html)
+	})
+
 	router.GET("/api/monitors", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
 			"count":    len(service.Monitors),
