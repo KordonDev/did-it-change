@@ -45,6 +45,25 @@ go build
 ./did-it-change
 ```
 
+### Docker
+
+You can also run the application using Docker:
+
+```bash
+# Build the Docker image
+docker build -t did-it-change .
+
+# Run the container
+docker run -p 8080:8080 -v $(pwd)/config:/app/config did-it-change
+```
+
+Or use the pre-built image from GitHub Container Registry:
+
+```bash
+docker pull ghcr.io/kordondev/did-it-change:latest
+docker run -p 8080:8080 -v $(pwd)/config:/app/config ghcr.io/kordondev/did-it-change:latest
+```
+
 ## API Endpoints
 
 - `GET /api/monitors` - Get all monitors and their statuses
