@@ -1,0 +1,10 @@
+monitors:
+  - name: localhost
+    endpoint: http://localhost:2015/Readme.md #https://github.com/
+    checkInterval: 15  # seconds
+    failThreshold: 2    # consecutive unchanged checks to mark as fail
+  
+  - name: weather-api
+    endpoint: https://api.weather.com/forecast
+    checkInterval: 600
+    failThreshold: 5
