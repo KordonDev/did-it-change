@@ -1,24 +1,12 @@
-FROM golang:1.23-alpine AS builder
+FROM alpine:3.18.4
 
 WORKDIR /app
-COPY go.mod go.sum ./
-RUN go mod download
-
-COPY . .
-RUN CGO_ENABLED=0 GOOS=linux go build -o did-it-change .
-
-FROM alpine:latest
-
-RUN apk --no-cache add ca-certificates && \
-    mkdir -p /app/config
-
-WORKDIR /app
-COPY --from=builder /app/did-it-change .
-COPY config/monitors.yaml /app/config/
+ADD did-it-change /app/dit-it-change
 
 # Create an unprivileged user
 RUN adduser -D appuser && chown -R appuser:appuser /app
 USER appuser
+ENV GIN_MODE=release
 
 # Expose the API port
 EXPOSE 8080
