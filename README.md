@@ -64,6 +64,31 @@ docker pull ghcr.io/kordondev/did-it-change:latest
 docker run -p 8080:8080 -v $(pwd)/config:/app/config ghcr.io/kordondev/did-it-change:latest
 ```
 
+### Docker Compose
+
+Create a `docker-compose.yml` file:
+
+```yaml
+version: '3'
+
+services:
+  did-it-change:
+    image: ghcr.io/kordondev/did-it-change:latest
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./config:/app/config
+    restart: unless-stopped
+```
+
+Run with Docker Compose:
+
+```bash
+docker-compose up -d
+```
+
+This mounts your local `./config` directory to `/app/config` inside the container, allowing you to easily modify the `monitors.yaml` file without rebuilding the container.
+
 ## API Endpoints
 
 - `GET /api/monitors` - Get all monitors and their statuses
