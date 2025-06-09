@@ -77,3 +77,7 @@ docker run -p 8080:8080 -v $(pwd)/config:/app/config ghcr.io/kordondev/did-it-ch
 3. Content from the endpoint is hashed and compared to the previous hash
 4. If the content remains unchanged for `failThreshold` consecutive checks, the status is set to `fail`
 5. If the content changes after being marked as `fail`, the status is set to `success`
+
+## Realease
+`git tag -a v0.1.0 -m "Initial release"`
+`git push --tags`
