@@ -45,6 +45,50 @@ go build
 ./did-it-change
 ```
 
+### Docker
+
+You can also run the application using Docker:
+
+```bash
+# Build the Docker image
+docker build -t did-it-change .
+
+# Run the container
+docker run -p 8080:8080 -v $(pwd)/config:/app/config did-it-change
+```
+
+Or use the pre-built image from GitHub Container Registry:
+
+```bash
+docker pull ghcr.io/kordondev/did-it-change:latest
+docker run -p 8080:8080 -v $(pwd)/config:/app/config ghcr.io/kordondev/did-it-change:latest
+```
+
+### Docker Compose
+
+Create a `docker-compose.yml` file:
+
+```yaml
+version: '3'
+
+services:
+  did-it-change:
+    image: ghcr.io/kordondev/did-it-change:latest
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./config:/app/config
+    restart: unless-stopped
+```
+
+Run with Docker Compose:
+
+```bash
+docker-compose up -d
+```
+
+This mounts your local `./config` directory to `/app/config` inside the container, allowing you to easily modify the `monitors.yaml` file without rebuilding the container.
+
 ## API Endpoints
 
 - `GET /api/monitors` - Get all monitors and their statuses
@@ -58,3 +102,7 @@ go build
 3. Content from the endpoint is hashed and compared to the previous hash
 4. If the content remains unchanged for `failThreshold` consecutive checks, the status is set to `fail`
 5. If the content changes after being marked as `fail`, the status is set to `success`
+
+## Realease
+`git tag -a v0.1.0 -m "Initial release"`
+`git push --tags`
