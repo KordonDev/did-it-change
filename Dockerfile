@@ -1,6 +1,6 @@
 FROM alpine:3.18.4
 
-ADD did-it-change /app/dit-it-change
+ADD did-it-change /app/did-it-change
 
 ENV GIN_MODE=release
 
