@@ -1,5 +1,6 @@
 FROM alpine:3.18.4
 
+WORKDIR /app
 ADD did-it-change /app/did-it-change
 
 ENV GIN_MODE=release
